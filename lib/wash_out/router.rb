@@ -19,9 +19,10 @@ module WashOut
 
       if soap_action.blank?
         soap_action = nori.parse(soap_body env)
-            .values_at(:envelope, :Envelope).compact.first
-            .values_at(:body, :Body).compact.first
-            .keys.first.to_s
+        return if soap_action.blank?
+        soap_action = soap_action.values_at(:envelope, :Envelope).compact.first
+          .values_at(:body, :Body).compact.first
+          .keys.first.to_s
       end
 
       # RUBY18 1.8 does not have force_encoding.
